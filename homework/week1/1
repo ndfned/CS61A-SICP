@@ -1,0 +1,10 @@
+Exercise 1.6: Alyssa P. Hacker doesn’t see why if needs to
+be provided as a special form. “Why can’t I just define it as
+an ordinary procedure in terms of cond?” she asks. Alyssa’s
+friend Eva Lu Ator claims this can indeed be done, and she
+defines a new version of if
+
+
+Answer: special form 'if' is used, as opposed to a procedure, because it has special evaluation rule.
+Basically, when 'if' is used only one clase is evaluated. So when the predicate returns false, only 
+else-clause is evaluated, then-clause is not touched at all (meaning that there is no procedure call, for example)
