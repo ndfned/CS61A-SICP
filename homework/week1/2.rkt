@@ -11,6 +11,6 @@
 (define (squares numbers)
   (if (empty? numbers)
       '()
-      (cons (square (first numbers)) (squares (bf numbers)))))
+      (se (square (first numbers)) (squares (bf numbers)))))
 
 (squares '(2 3 4 5)) ; (4 9 16 25)
