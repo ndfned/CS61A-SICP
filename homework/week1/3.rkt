@@ -11,20 +11,20 @@
 ; I/me -> you
 ; You -> me, if first word -> I
 
-(define (replace wd is-first is-last)
-  (let ((new-word (cond ((or (equal? wd 'I) (equal? wd 'me)) 'you)
-                        ((and is-first (or (equal? wd 'You) (equal? wd 'you))) 'i)
-                        ((or (equal? wd 'You) (equal? wd 'you)) 'me)
-                        (else wd))))
-    (if is-last new-word (word new-word " "))))
-
 (define (switch sentence)
-  (define (build sentence)
-    (cond ((empty? sentence) "")
-          ((equal? (count sentence) 1) (replace (first sentence) #f #t))
-          (else (word (replace (first sentence) #f #f) (build (bf sentence))))))
+  (define (replace wd is-first)
+    (cond ((or (equal? wd 'I) (equal? wd 'me)) 'you)
+          ((and is-first (or (equal? wd 'You) (equal? wd 'you))) 'i)
+          ((or (equal? wd 'You) (equal? wd 'you)) 'me)
+          (else wd)))
+  (define (build sentence is-first)
+    (if (empty? sentence)
+        '()
+        (se (replace (first sentence) is-first) (build (bf sentence) #f))))
 
-  (let ((first-word (replace (first sentence) #t #f)))
-    (word first-word (build (bf sentence)))))
+  (build sentence #t))
 
 (switch '(You told me that I should wake you up)) ; (i told you that you should wake me up)
+(switch '()) ; '()
+(switch '(You)) ; '(i)
+(switch '(asd you)) ; (asd me)
