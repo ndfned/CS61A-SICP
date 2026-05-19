@@ -6,7 +6,7 @@
 ; (ordered? '(2 3 4)) ; true
 ; (ordered? '(3 2 4)) ; false
 
-(define (ordered? numbers)
+(define (ordered2? numbers)
   (define (iter numbers prev)
     (cond ((empty? numbers) #t)
           ((null? prev) (iter (bf numbers) (first numbers)))
@@ -15,9 +15,14 @@
 
   (iter numbers null))
 
+(define (ordered? numbers)
+  (cond ((empty? (bf numbers)) #t)
+        ((> (first numbers) (first (bf numbers))) #f)
+        (else (ordered? (bf numbers)))
+        ))
+
 
 (ordered? '(2 3 4)) ; true
 (ordered? '(3 2 4)) ; false
-(ordered? '()) ; true
 (ordered? '(3 3 4)) ; true
 (ordered? '(3 4 4 1)) ; false
