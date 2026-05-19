@@ -35,5 +35,5 @@
 ;Can you think of reasons why it might be advantageous to
 ; treat or as an ordinary function?
 
-; less special = forms, easier evaluation process
+; less special forms = easier evaluation process
 ; makes interpretator less complex
