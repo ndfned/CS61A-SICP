@@ -18,21 +18,10 @@
 (define (new-and exp1 exp2)
   (if exp1 exp2 exp1))
 
-(define (new-or exp1 exp2)
-  (if exp1 exp1 exp2))
+(define (infinity) (infinity))
 
-(define (test-spec-form x)
-  (cond ((= 1 x) #f)
-        (else (and (test-spec-form 1) (test-spec-form 0)))
-        ))
-
-(define (test-proc x)
-  (cond ((= 1 x) #f)
-        (else (new-and (test-proc 1) (test-proc 0)))
-        ))
-
-(test-spec-form 0)
-(test-proc 0)
+(and #f (infinity))
+(new-and #f (infinity))
 ; new-and procedure stucks in a infinite loop,
 ; which means that it is implemented as procedure, not special form
 
