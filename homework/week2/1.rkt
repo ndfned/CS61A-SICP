@@ -1,25 +1,28 @@
 #lang planet dyoo/simply-scheme:2
 
-; SICP Exercise 1.31(a):
+; SICP Exercise 1.31:
 
-(define (product term a next b)
-  (if (> a b)
-      1
-      (* (term a) (product term (next a) next b))))
 
 (define (inc x) (+ x 1))
 (define (identity x) x)
 
-(product identity 3 inc 5) ; 60
-(product identity 3 inc 7) ; 60
-
-(define (factorial n) (product identity 1 inc n))
-
-(factorial 3) ; 6
-(factorial 5) ; 120
+(define (product term start next end)
+  (if (> start end)
+      1
+      (* (identity start) (product term (next start) next end))
+  ))
 
 
-(define (pi terms) (* 4 (product
-                          (lambda (x) (/ (* 2 (inc (floor (/ x 2))))
-                                         (inc (* 2 (ceiling (/ x 2))))))
-                          1 inc terms)))
+(define (product-iter term start next end)
+  (define (iter counter acc)
+    (if (> counter end)
+        acc
+        (iter (next counter) (* (term counter) acc))
+    ))
+
+  (iter start 1))
+
+
+(define (factorial n) (product-iter identity 1 inc n))
+(factorial 5)
+(factorial 3)
