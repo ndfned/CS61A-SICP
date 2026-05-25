@@ -1,6 +1,6 @@
 #lang planet dyoo/simply-scheme:2
 
-; SICP Exercise 1.46:
+; SICP Exercise 1.46a:
 
 (define (iterative-improve good-enough? improve)
   (lambda (guess)
