@@ -1,5 +1,8 @@
 #lang planet dyoo/simply-scheme:2
 
+; Write a procedure number-of-partitions that computes the number of partitions of its
+; nonnegative integer argument
+
 (define (number-of-partitions n) (cc n n))
 
 (define (cc n kinds)
