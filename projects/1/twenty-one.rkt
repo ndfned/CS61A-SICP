@@ -42,3 +42,53 @@
         deck
         (move-card deck '() (random size))))
   (shuffle (make-ordered-deck) 52))
+
+
+; 1. The program in the library is incomplete. It lacks a procedure best-total that takes a
+; hand (a sentence of card words) as argument, and returns the total number of points in the
+; hand. It’s called best-total because if a hand contains aces, it may have several different
+; totals. The procedure should return the largest possible total that’s less than or equal to
+; 21, if possible
+
+(define (card-value card)
+  (let ((rank (bl card)))
+    (cond ((member? rank '(j q k)) 10)
+          ((eq? rank 'a) 0)
+          ((eq? rank 10) 10)
+          (else rank))
+    ))
+(define (card-ace? card)
+  (eq? (first card) 'a))
+
+
+(define (best-total hand)
+  (define (add-aces hand sum)
+    (if (empty? hand)
+        sum
+        (if (card-ace? (first hand))
+            (if (> sum 10)
+                (add-aces  (bf hand) (+ sum 1))
+                (add-aces (bf hand) (+ sum 11))
+                )
+            (add-aces (bf hand) sum)
+            )
+        ))
+
+  (define (count-cards hand sum)
+    (if (empty? hand)
+        sum
+        (count-cards (bf hand) (+ sum (card-value (first hand))))
+        ))
+
+  (add-aces hand (count-cards hand 0))
+  )
+
+
+(best-total '(ad 8s)) ; 19 in this hand the ace counts as 11
+(best-total '(ad 8s 5h)) ; 14 here it must count as 1 to avoid busting
+(best-total '(ad as 9h)) ; 21 here one counts as 11 and the other as 1
+(best-total '(10s 9h))     ; 19, no aces
+(best-total '(10s 10h 5d)) ; 25, bust case
+(best-total '(ad ac 9h))   ; 21, mixed aces
+(best-total '(ad ac 9h 2d)) ; 13, forced adjustment
+(best-total '(ad 10s))     ; 21, ace as 11 works exactly
