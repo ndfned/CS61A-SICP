@@ -54,7 +54,6 @@
   (let ((rank (bl card)))
     (cond ((member? rank '(j q k)) 10)
           ((eq? rank 'a) 0)
-          ((eq? rank 10) 10)
           (else rank))
     ))
 (define (card-ace? card)
