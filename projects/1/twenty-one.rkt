@@ -213,14 +213,43 @@
 ; you should play more aggressively than usual. Write a valentine strategy that stops at
 ; 17 unless you have a heart in your hand, in which case it stops at 19.
 
-(define (has-hearts? hand)
+(define (has-suit? hand suit)
   (cond ((empty? hand) #f)
-        ((equal? (card-suit (first hand)) "H") #t)
-        (else (has-hearts? (bf hand)))
+        ((equal? (card-suit (first hand)) suit) #t)
+        (else (has-suit? (bf hand) suit))
         ))
 
-(define (valentine hand dealer-card)
-  ((if (has-hearts? hand) (stop-at 19) (stop-at 17)) hand dealer-card))
+(define (valentine-old hand dealer-card)
+  ((if (has-suit? hand "H") (stop-at 19) (stop-at 17)) hand dealer-card))
+
+; >(valentine '("3C" "8C" "7D") "4C")
+; <#f
+; customer=18; no hearts -> stand
+; >(valentine '("10H" "AC") "5C")
+; <#f
+; customer=21; hearts, but >= 19 -> stand
+; >(valentine '("JD" "6D" "AH") "4H")
+; <#t
+; customer=17; hearts with 17 -> hit
+; >(valentine '("2S" "7D" "3C" "6H") "8D")
+; <#t
+; customer=18; hearts with 18 -> hit
+
+
+
+; 7. Generalize part 6 above by defining a function suit-strategy that takes three arguments:
+; a suit (h, s, d, or c), a strategy to be used if your hand doesn’t include that suit,
+; and a strategy to be used if your hand does include that suit. It should return a strategy
+; that behaves accordingly. Show how you could use this function and the stop-at function
+; from part 5 to redefine the valentine strategy of part 6
+
+(define (suit-strategy suit strategy-with-suit strategy-without-suit)
+  (lambda (hand dealer-card)
+    ((if (has-suit? hand suit)
+         strategy-with-suit
+         strategy-without-suit)
+     hand dealer-card)))
+(define valentine (suit-strategy "H" (stop-at 19) (stop-at 17)))
 
 ; >(valentine '("3C" "8C" "7D") "4C")
 ; <#f
