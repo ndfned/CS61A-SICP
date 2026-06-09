@@ -263,3 +263,29 @@
 ; >(valentine '("2S" "7D" "3C" "6H") "8D")
 ; <#t
 ; customer=18; hearts with 18 -> hit
+
+
+
+  (define (play-strategies hand dealer-card acc strategies)
+    (if (empty? strategies)
+        acc
+        (if ((first strategies) hand dealer-card)
+            (play-strategies hand dealer-card (+ acc 1) (bf strategies))
+            (play-strategies hand dealer-card acc (bf strategies)))))
+(define (majority strategy1 strategy2 strategy3)
+
+  (lambda (hand dealer-card)
+    (>= (play-strategies hand dealer-card 0
+                         (list strategy1 strategy2 strategy3))
+        2)))
+
+(define majority-custom1 (majority stop-at-17 dealer-sensitive valentine))
+
+; (majority-custom1 '("JD" "6D" "AH") "4H")
+; total hits=1 -> stand
+; (majority-custom1 '("JD" "6D") "4H")
+; total hits=2 -> hit
+; (majority-custom1 '("JD" "6D") "13H")
+; total hits=3 -> hit
+; (majority-custom1 '("JD" "AD") "13H")
+; total hits=0 -> stand
