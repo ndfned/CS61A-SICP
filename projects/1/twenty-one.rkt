@@ -265,13 +265,19 @@
 ; customer=18; hearts with 18 -> hit
 
 
+; 8. Define a function majority that takes three strategies as arguments and produces a
+; strategy as a result, such that the result strategy always decides whether or not to “hit”
+; by consulting the three argument strategies, and going with the majority. That is, the
+; result strategy should return #t if and only if at least two of the three argument strategies
+; do. Using the three strategies from parts 2, 4, and 6 as argument strategies, play a few
+; games using the “majority strategy” formed from these three.
 
-  (define (play-strategies hand dealer-card acc strategies)
-    (if (empty? strategies)
-        acc
-        (if ((first strategies) hand dealer-card)
-            (play-strategies hand dealer-card (+ acc 1) (bf strategies))
-            (play-strategies hand dealer-card acc (bf strategies)))))
+(define (play-strategies hand dealer-card acc strategies)
+  (if (empty? strategies)
+      acc
+      (if ((first strategies) hand dealer-card)
+          (play-strategies hand dealer-card (+ acc 1) (bf strategies))
+          (play-strategies hand dealer-card acc (bf strategies)))))
 (define (majority strategy1 strategy2 strategy3)
 
   (lambda (hand dealer-card)
@@ -289,3 +295,24 @@
 ; total hits=3 -> hit
 ; (majority-custom1 '("JD" "AD") "13H")
 ; total hits=0 -> stand
+
+
+
+; 9. Some people just can’t resist taking one more card. Write a procedure reckless that
+; takes a strategy as its argument and returns another strategy. This new strategy should
+; take one more card than the original would. (In other words, the new strategy should
+; stand if the old strategy would stand on the butlast of the customer’s hand.)
+
+(define (reckless strategy)
+  (lambda (hand dealer-card)
+    (if (strategy hand dealer-card)
+      #t
+      (strategy (bl hand) dealer-card)
+    ))
+  )
+
+; ((reckless stop-at-17) '("JD" "7D") "13H") ; #t
+; ((reckless stop-at-17) '("JD") "13H") ; #t
+; ((reckless stop-at-17) '() "13H") ; #t
+; ((reckless stop-at-17) '("JD" "7D" "6H") "13H") ; #f
+; ((reckless stop-at-17) '("JD" "7D" "6H" "2H") "13H") ; #f
