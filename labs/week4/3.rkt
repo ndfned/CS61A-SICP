@@ -17,14 +17,20 @@
     (make-point (/ (+ x1 x2) 2) (/ (+ y1 y2) 2))
     ))
 
-(define (make-rect p1 width height)
-  (cons p1 (cons width height)))
+(define (make-rect AB AC)
+  (cons AB AC))
 (define (width rect)
-  (car (cdr rect)))
+  (let ((AB (car rect)))
+        (abs (- (x-point (end-segment AB)) (x-point (start-segment AB))))
+  ))
 (define (height rect)
-  (cdr (cdr rect)))
+  (let ((AC (cdr rect)))
+        (abs (- (y-point (end-segment AC)) (y-point (start-segment AC))))
+  ))
 
-(define r1 (make-rect (make-point 4 0) 3 2))
+(define r1 (make-rect 
+  (make-segment (make-point 1 0) (make-point 4 0))
+  (make-segment (make-point 1 0) (make-point 1 -2))))
 (width r1) ; => 3
 (height r1) ; => 2
 
