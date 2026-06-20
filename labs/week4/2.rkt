@@ -1,6 +1,6 @@
 #lang sicp
 
-; SICP Exercise 2.2:
+; SICP Exercise 2.3:
 
 (define (make-point x y) (cons x y))
 (define (x-point p) (car p))
@@ -17,20 +17,21 @@
     (make-point (/ (+ x1 x2) 2) (/ (+ y1 y2) 2))
     ))
 
-(define p1 (make-point 1 2))
-(define p2 (make-point 5 6))
+(define (make-rect p1 width height)
+  (cons p1 (cons width height)))
+(define (width rect)
+  (car (cdr rect)))
+(define (height rect)
+  (cdr (cdr rect)))
 
-(x-point p1) ; => 1
-(y-point p1) ; => 2
+(define r1 (make-rect (make-point 4 0) 3 2))
+(width r1) ; => 3
+(height r1) ; => 2
 
-(define s (make-segment p1 p2))
+(define (perimeter rect)
+  (* 2 (+ (width rect) (height rect))))
+(define (area rect)
+  (* (width rect) (height rect)))
 
-(start-segment s) ; => p1
-(end-segment s) ; => p2
-
-(midpoint-segment s) ; => (make-point 3 4)
-
-(midpoint-segment
-  (make-segment (make-point 0 0)
-                (make-point 2 8)))
-; => (make-point 1 4)
+(perimeter r1) ; => 10
+(area r1) ; => 6
