@@ -16,8 +16,6 @@
   (iter word (lambda (pair) pair))
 )
 
-
-; (cxr-function 'cdddadaadar) ; -> fn
 (define cddar (cxr-function 'cddar))
 (cddar (cons 1 (cons 2 (cons 3 4)))) ; 3
 
