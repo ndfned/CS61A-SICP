@@ -137,3 +137,13 @@
       painter
       (let ((smaller (up-split painter (- n 1))))
         (below painter (beside smaller smaller)))))
+
+(define (split fn1 fn2)
+  (lambda (painter n)
+    (if (= n 0)
+        painter
+        (let ((smaller ((split fn1 fn2) painter (- n 1))))
+          (fn1 painter (fn2 smaller smaller))))))
+
+(define right-split (split beside below))
+(define up-split (split below beside))
