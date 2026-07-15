@@ -170,3 +170,7 @@
 (define (origin-frame frame) (car frame))
 (define (edge1-frame frame) (cadr frame))
 (define (edge2-frame frame) (caddr frame))
+
+(define (make-segment v1 v2) (cons v1 v2))
+(define (start-segment v) car)
+(define (end-segment v) cdr)
