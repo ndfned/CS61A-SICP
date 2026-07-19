@@ -132,11 +132,11 @@
 ; ===============================================
 ; my code starts here
 
-(define (up-split painter n)
-  (if (= n 0)
-      painter
-      (let ((smaller (up-split painter (- n 1))))
-        (below painter (beside smaller smaller)))))
+; (define (up-split painter n)
+;   (if (= n 0)
+;       painter
+;       (let ((smaller (up-split painter (- n 1))))
+;         (below painter (beside smaller smaller)))))
 
 (define (split fn1 fn2)
   (lambda (painter n)
@@ -149,8 +149,8 @@
 (define up-split (split below beside))
 
 (define (make-vect x y) (cons x y))
-(define (xcor-vect v) car)
-(define (ycor-vect v) cdr)
+(define xcor-vect car)
+(define ycor-vect cdr)
 
 (define (add-vect v1 v2)
   (make-vect
@@ -172,5 +172,12 @@
 (define (edge2-frame frame) (caddr frame))
 
 (define (make-segment v1 v2) (cons v1 v2))
-(define (start-segment v) car)
-(define (end-segment v) cdr)
+(define start-segment car)
+(define end-segment cdr)
+
+(define outline-painter
+  (segments->painter (list
+                       (make-segment (make-vect 0 0) (make-vect 0 1))
+                       (make-segment (make-vect 0 1) (make-vect 1 1))
+                       (make-segment (make-vect 1 1) (make-vect 1 0))
+                       (make-segment (make-vect 1 0) (make-vect 0 0)))))
