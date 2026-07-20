@@ -167,9 +167,9 @@
 
 (define (make-frame origin edge1 edge2)
   (list origin edge1 edge2))
-(define (origin-frame frame) (car frame))
-(define (edge1-frame frame) (cadr frame))
-(define (edge2-frame frame) (caddr frame))
+(define origin-frame car)
+(define edge1-frame cadr)
+(define edge2-frame caddr)
 
 (define (make-segment v1 v2) (cons v1 v2))
 (define start-segment car)
@@ -181,3 +181,13 @@
                        (make-segment (make-vect 0 1) (make-vect 1 1))
                        (make-segment (make-vect 1 1) (make-vect 1 0))
                        (make-segment (make-vect 1 0) (make-vect 0 0)))))
+(define x-painter
+  (segments->painter (list
+                       (make-segment (make-vect 0 0) (make-vect 1 1))
+                       (make-segment (make-vect 1 0) (make-vect 0 1)))))
+(define diamond-painter
+  (segments->painter (list
+                       (make-segment (make-vect 0 0.5) (make-vect 0.5 1))
+                       (make-segment (make-vect 0.5 1) (make-vect 1 0.5))
+                       (make-segment (make-vect 1 0.5) (make-vect 0.5 0))
+                       (make-segment (make-vect 0.5 0) (make-vect 0 0.5)))))
