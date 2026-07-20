@@ -4,11 +4,11 @@
   (let ((painter2 (beside painter (flip-vert painter))))
     (below painter2 painter2)))
 
-(define (right-split painter n)
-  (if (= n 0)
-      painter
-      (let ((smaller (right-split painter (- n 1))))
-        (beside painter (below smaller smaller)))))
+; (define (right-split painter n)
+;   (if (= n 0)
+;       painter
+;       (let ((smaller (right-split painter (- n 1))))
+;         (beside painter (below smaller smaller)))))
 
 (define (corner-split painter n)
   (if (= n 0)
@@ -34,20 +34,20 @@
 
 (define (identity x) x)
 
-(define (flipped-pairs painter)
-  (let ((combine4 (square-of-four identity flip-vert
-                                  identity flip-vert)))
-    (combine4 painter)))
+; (define (flipped-pairs painter)
+;   (let ((combine4 (square-of-four identity flip-vert
+;                                   identity flip-vert)))
+;     (combine4 painter)))
 
 ;; or
 
 ; (define flipped-pairs
 ;   (square-of-four identity flip-vert identity flip-vert))
 
-(define (square-limit painter n)
-  (let ((combine4 (square-of-four flip-horiz identity
-                                  rotate180 flip-vert)))
-    (combine4 (corner-split painter n))))
+; (define (square-limit painter n)
+;   (let ((combine4 (square-of-four flip-horiz identity
+;                                   rotate180 flip-vert)))
+;     (combine4 (corner-split painter n))))
 
 (define (frame-coord-map frame)
   (lambda (v)
