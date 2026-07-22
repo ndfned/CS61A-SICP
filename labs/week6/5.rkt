@@ -43,7 +43,7 @@
                        (adjoin-set
                          (list 3 'Natan)
                          (adjoin-set
-                           (list 7 'Eric) '()))))))))
+                           (list 12 'Eric) '()))))))))
 
 
 (define (lookup given-key set-of-records)
