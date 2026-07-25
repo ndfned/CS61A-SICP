@@ -155,13 +155,7 @@
   (calc-height tree 0))
 (tree-height set1) ; 4
 
-(define (tree-height-iter tree)
-  (define (calc-height tree acc pick-branch)
-    (cond ((null? tree) acc)
-          (else (calc-height (pick-branch tree) (+ 1 acc) pick-branch))
-          ))
-  (max (calc-height tree 0 left-branch) (calc-height tree 0 right-branch)))
-(tree-height-iter set1) ; 4
+
 
 (define (part list)
   (define (take size list)
@@ -194,3 +188,50 @@
 
 (list->tree (list 1 3 5 7 9 11)) ; (7 (3 (1 () ()) (5 () ())) (11 (9 () ()) ()))
 (tree->list-iter (list->tree (list 1 3 5 7 9 11))) ; (1 3 5 7 9 11)
+
+
+(define tree (adjoin-set
+               12
+               (adjoin-set
+                 13
+                 (adjoin-set
+                   22
+                   (adjoin-set
+                     8
+                     (adjoin-set
+                       4
+                       (adjoin-set
+                         10
+                         (adjoin-set
+                           14
+                           (adjoin-set
+                             5
+                             (adjoin-set
+                               1
+                               (adjoin-set
+                                 11
+                                 (adjoin-set
+                                   9
+                                   (adjoin-set
+                                     3
+                                     (adjoin-set
+                                       7 '()))))))))))))))
+
+(define (count-node-oddity tree)
+  (define (helper tree depth)
+    (cond ((null? tree) (cons 0 0))
+          (else
+            (let ((odd-count (if (odd? depth) 1 0))
+                  (even-count (if (even? depth) 1 0))
+                  (left-result (helper (left-branch tree)
+                                       (+ 1 depth)))
+                  (right-result (helper (right-branch tree)
+                                        (+ 1 depth))))
+              (cons
+                (+ odd-count (car left-result) (car right-result))
+                (+ even-count (cdr left-result) (cdr right-result)))
+              )
+            )
+          ))
+  (helper tree 1))
+(count-node-oddity tree) ; (7 6)
