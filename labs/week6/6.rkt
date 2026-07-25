@@ -145,3 +145,52 @@
   (iter tree '()))
 (tree->list-iter set1) ; (1 3 5 7 9 11 14)
 
+(define (tree-height tree)
+  (define (calc-height tree acc)
+    (cond ((null? tree) acc)
+          (else (max
+                  (calc-height (left-branch tree) (+ 1 acc))
+                  (calc-height (right-branch tree) (+ 1 acc))))
+          ))
+  (calc-height tree 0))
+(tree-height set1) ; 4
+
+(define (tree-height-iter tree)
+  (define (calc-height tree acc pick-branch)
+    (cond ((null? tree) acc)
+          (else (calc-height (pick-branch tree) (+ 1 acc) pick-branch))
+          ))
+  (max (calc-height tree 0 left-branch) (calc-height tree 0 right-branch)))
+(tree-height-iter set1) ; 4
+
+(define (part list)
+  (define (take size list)
+    (define (iter list acc)
+      (cond ((null? list) (cons (reverse acc) list))
+            ((>= (length acc) size) (cons (reverse acc) list))
+            (else (iter (cdr list) (cons (car list) acc)))
+            ))
+    (iter list '()))
+  (take (quotient (length list) 2) list))
+(car (part (list 1 3 5 7 9 11 14))) ; (1 3 5)
+(cdr (part (list 1 3 5 7 9 11 14))) ; (7 9 11 14)
+
+(define (list->tree list)
+  (cond ((null? list) '())
+        (else (let ((parted (part list)))
+                (let ((left-items (car parted))
+                      (this-entry (cadr parted))
+                      (right-items (cddr parted)))
+                  (make-tree
+                    this-entry
+                    (list->tree left-items)
+                    (list->tree right-items))
+                  )
+                ))
+        ))
+
+(list->tree (list 1 3 5 7 9 11 14)) ; (7 (3 (1 () ()) (5 () ())) (11 (9 () ()) (14 () ())))
+(tree->list-iter (list->tree (list 1 3 5 7 9 11 14))) ; (1 3 5 7 9 11 14)
+
+(list->tree (list 1 3 5 7 9 11)) ; (7 (3 (1 () ()) (5 () ())) (11 (9 () ()) ()))
+(tree->list-iter (list->tree (list 1 3 5 7 9 11))) ; (1 3 5 7 9 11)
