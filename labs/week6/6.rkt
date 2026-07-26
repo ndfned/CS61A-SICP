@@ -155,6 +155,15 @@
   (calc-height tree 0))
 (tree-height set1) ; 4
 
+; (define (tree-height-2 tree)
+;   (define (iter tree lacc racc)
+;     (cond ((null? tree) (max lacc racc))
+;           (else (iter (right-branch tree)
+;                       (iter (left-branch tree) (+ 1 lacc) racc)
+;                       (+ 1 racc)))
+;           ))
+;   (iter tree 0 0))
+; (tree-height-2 set1) ; 4
 
 
 (define (part list)
