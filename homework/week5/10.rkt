@@ -53,7 +53,7 @@
         (adjoin-set (make-leaf (car pair) ; symbol
                                (cadr pair)) ; frequency
                     (make-leaf-set (cdr pairs))))))
- ; 
+;
 (define sample-tree
   (make-code-tree (make-leaf 'A 4)
                   (make-code-tree
@@ -68,4 +68,28 @@
 
 (decode sample-message sample-tree) ; (A D A B B C A)
 
+; Exercise 2.68
 
+(define (encode message tree)
+  (if (null? message)
+      '()
+      (append (encode-symbol (car message) tree)
+              (encode (cdr message) tree))))
+
+(define (encode-symbol symbol tree)
+  (define (member? symbol symbols)
+    (if (null? symbols)
+        false
+        (if (eq? symbol (car symbols))
+            true
+            (member? symbol (cdr symbols)))
+        ))
+  (cond ((leaf? tree) '())
+        ((member? symbol (symbols (left-branch tree)))
+         (cons 0 (encode-symbol symbol (left-branch tree))))
+        ((member? symbol (symbols (right-branch tree)))
+         (cons 1 (encode-symbol symbol (right-branch tree))))
+        (else (error "bad symbol: " symbol))
+        ))
+
+(decode (encode '(A D A B B C A) sample-tree) sample-tree) ; (A D A B B C A)
