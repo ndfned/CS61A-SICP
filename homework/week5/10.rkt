@@ -93,3 +93,21 @@
         ))
 
 (decode (encode '(A D A B B C A) sample-tree) sample-tree) ; (A D A B B C A)
+
+
+; Exercise 2.69
+
+(define (generate-tree pairs)
+  (define (merge leaf-set)
+    (cond ((null? (cdr leaf-set)) (car leaf-set))
+          (else
+            (merge 
+              (adjoin-set
+                (make-code-tree (car leaf-set) (cadr leaf-set)) 
+                (cddr leaf-set)))
+          )
+          ))
+  (merge (make-leaf-set pairs)))
+
+(define gen-tree (generate-tree '((A 4) (B 2) (C 1) (D 1))))
+(decode (encode '(A D A B B C A) gen-tree) gen-tree) ; (A D A B B C A)
