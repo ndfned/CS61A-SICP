@@ -101,13 +101,32 @@
   (define (merge leaf-set)
     (cond ((null? (cdr leaf-set)) (car leaf-set))
           (else
-            (merge 
+            (merge
               (adjoin-set
-                (make-code-tree (car leaf-set) (cadr leaf-set)) 
+                (make-code-tree (car leaf-set) (cadr leaf-set))
                 (cddr leaf-set)))
-          )
+            )
           ))
   (merge (make-leaf-set pairs)))
 
 (define gen-tree (generate-tree '((A 4) (B 2) (C 1) (D 1))))
 (decode (encode '(A D A B B C A) gen-tree) gen-tree) ; (A D A B B C A)
+
+
+; Exercise 2.70
+
+(define song-tree
+  (generate-tree '((a 2) (get 2) (sha 3) (wah 1)
+                         (boom 1) (job 2) (na 16) (yip 9))))
+
+(decode (encode '(get a job
+              sha na na na na na na na na
+              get a job
+              sha na na na na na na na na
+              wah yip yip yip yip yip yip yip yip yip
+              sha boom)
+        song-tree) song-tree)
+; (get a job sha na na na na na na na na get a job sha na na na na na na na na wah
+;  yip yip yip yip yip yip yip yip yip shaboom)
+
+
