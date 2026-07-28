@@ -1,5 +1,7 @@
 #lang racket
 
+(require racket/trace)
+
 (define ns (make-base-namespace)) ; fix for Racket
 
 ;; Simple evaluator for Scheme without DEFINE, using substitution model.
@@ -67,6 +69,7 @@
          (if (eval-1 (cadr exp))
              (eval-1 (caddr exp))
              (eval-1 (cadddr exp))))
+        ((and-exp? exp) (and-eval (cdr exp)))
         ((lambda-exp? exp) exp)
         ((define-exp? exp)
          (eval (list 'define
@@ -76,6 +79,14 @@
         ((pair? exp) (apply-1 (eval-1 (car exp)) ; eval the operator
                               (map eval-1 (cdr exp))))
         (else (error "bad expr: " exp))))
+
+(define (and-eval exp)
+  (let ((value (eval-1 (car exp))))
+    (cond ((null? (cdr exp)) value)
+          (value (and-eval (cdr exp)))
+          (else #f)
+          )
+    ))
 
 
 ;; Comments on APPLY-1:
@@ -116,6 +127,7 @@
 
 (define quote-exp? (exp-checker 'quote))
 (define if-exp? (exp-checker 'if))
+(define and-exp? (exp-checker 'and))
 (define lambda-exp? (exp-checker 'lambda))
 (define define-exp? (exp-checker 'define))
 
