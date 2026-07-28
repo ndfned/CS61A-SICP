@@ -65,6 +65,7 @@
         ; ((symbol? exp) (eval exp))	; use underlying Scheme's EVAL
         ((symbol? exp) (eval exp ns)) ; fix for Racket
         ((quote-exp? exp) (cadr exp))
+        ((let-exp? exp) (let-eval (cdr exp)))
         ((if-exp? exp)
          (if (eval-1 (cadr exp))
              (eval-1 (caddr exp))
@@ -133,6 +134,21 @@
 (define lambda-exp? (exp-checker 'lambda))
 (define define-exp? (exp-checker 'define))
 
+; (LET ((name1 value1) (name2 value2) ...) body)
+(define let-exp? (exp-checker 'let))
+; (define (let-names exp)
+;   (map (lambda (x) (car x)) (car exp)))
+  (define (let-names exp)
+  (map car (cadr exp)))
+(define (let-values exp)
+  (map (lambda (x) (cadr x)) (car exp)))
+(define let-body cadr)
+
+(define (let-eval exp)
+  (eval-1 (substitute (let-body exp) ; the body
+                      (let-names exp) ; the formal parameters
+                      (let-values exp) ; the actual arguments
+                      '()))) ; bound-vars, see below)
 
 ;; SUBSTITUTE substitutes actual arguments for *free* references to the
 ;; corresponding formal parameters.  For example, given the expression
@@ -241,6 +257,9 @@
   (if (null? items)
       '()
       (cons (apply-1 f (list (car items))) (map-1 f (cdr items)))
-  ))
+      ))
+
+; (LET ((name1 value1) (name2 value2) ...) body)
+; (eval-1 '(let ((a 1) (b 2)) (+ a b))) ; 3
 
 (scheme-1)
