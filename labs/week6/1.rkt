@@ -70,6 +70,7 @@
              (eval-1 (caddr exp))
              (eval-1 (cadddr exp))))
         ((and-exp? exp) (and-eval (cdr exp)))
+        ((map-exp? exp) (map-1 (cadr exp) (caddr exp)))
         ((lambda-exp? exp) exp)
         ((define-exp? exp)
          (eval (list 'define
@@ -128,6 +129,7 @@
 (define quote-exp? (exp-checker 'quote))
 (define if-exp? (exp-checker 'if))
 (define and-exp? (exp-checker 'and))
+(define map-exp? (exp-checker 'map-1))
 (define lambda-exp? (exp-checker 'lambda))
 (define define-exp? (exp-checker 'define))
 
@@ -234,5 +236,11 @@
 ;	      first
 ;	      '(the rain in spain))
 ; (t r i s)
+
+(define (map-1 f items)
+  (if (null? items)
+      '()
+      (cons (apply-1 f (list (car items))) (map-1 f (cdr items)))
+  ))
 
 (scheme-1)
