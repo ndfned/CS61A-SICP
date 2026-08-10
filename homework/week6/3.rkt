@@ -1,6 +1,6 @@
 #lang sicp
 
-; SICP Exercise 2.75:
+; SICP Exercise 2.79:
 
 (define (attach-tag type-tag contents)
   (cons type-tag contents))
