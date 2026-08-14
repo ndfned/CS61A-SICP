@@ -14,11 +14,9 @@
     (set! last-stuff-said stuff)
     stuff)
   (method (ask stuff)
-    (set! last-stuff-said stuff)
     (ask self 'say (se '(would you please) stuff)))
   (method (repeat) last-stuff-said)
   (method (greet)
-    (set! last-stuff-said (se '(hello my name is) name))
     (ask self 'say (se '(hello my name is) name))) )
 
 (define-class (pigger name)
@@ -56,3 +54,20 @@
 	(if (equal? stuff 'my) (usual 'say stuff) (ask self 'pigl stuff))
 	(map (lambda (w) (ask self 'say w)) stuff))) )
 
+
+(define brian (instantiate person 'brian))
+; brian
+(ask brian 'repeat)
+; ()
+(ask brian 'say '(hello))
+; (hello)
+(ask brian 'repeat)
+; (hello)
+(ask brian 'greet)
+; (hello my name is brian)
+(ask brian 'repeat)
+; (hello my name is brian)
+(ask brian 'ask '(close the door))
+; (would you please close the door)
+(ask brian 'repeat)
+; (would you please close the door)
