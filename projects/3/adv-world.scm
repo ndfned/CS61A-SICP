@@ -87,3 +87,15 @@
 
 (define coffee (instantiate thing 'coffee))
 (ask Intermezzo 'appear coffee)
+
+;; my code starts here
+(define Dormitory (instantiate place 'Dormitory))
+(define Kirin (instantiate place 'Kirin))
+
+(can-go Soda 'north Kirin)
+
+(define potstickers (instantiate thing 'potstickers))
+(ask Kirin 'appear potstickers)
+
+(define Me (instantiate person 'Me Dormitory))
+
