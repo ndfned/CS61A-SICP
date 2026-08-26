@@ -11,6 +11,10 @@
 ;;; change something should redefine everything in your world with the
 ;;; currently loaded (i.e. most recent) versions of your classes.
 
+(load "obj.scm")
+(load "adv.scm")
+(load "tables.scm")
+
 (define 61A-Lab (instantiate place '61A-Lab))
 (define Lounge (instantiate place 'Lounge))
 (can-go 61A-Lab 'up Lounge)
@@ -25,4 +29,3 @@
 (ask Lounge 'appear Coke)
 
 (define laba (instantiate person 'Lab-assistant 61A-Lab))
-
