@@ -1,3 +1,4 @@
 To run scm file (legacy):
 - go into dir with the file
 - docker run --rm -it -v "$PWD":/home stklos/stklos:1.60
+- (load "1.scm")
