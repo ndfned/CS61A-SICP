@@ -88,14 +88,43 @@
 (define coffee (instantiate thing 'coffee))
 (ask Intermezzo 'appear coffee)
 
+
 ;; my code starts here
+
+; Create a new person to represent yourself.  Put yourself in a new place
+; called Dormitory (or wherever you live) and connect it to campus so that you
+; can get there from here.  Create a place called Kirin, north of Soda.
+; (It's actually on Solano Avenue.)  Put a thing called Potstickers there.
 (define Dormitory (instantiate place 'Dormitory))
 (define Kirin (instantiate place 'Kirin))
 
 (can-go Soda 'north Kirin)
+(can-go Kirin 'south Soda)
 
-(define potstickers (instantiate thing 'potstickers))
-(ask Kirin 'appear potstickers)
+(define Potstickers (instantiate thing 'Potstickers))
+(ask Kirin 'appear Potstickers)
 
 (define Me (instantiate person 'Me Dormitory))
+(can-go Pimentel 'east Dormitory)
+(can-go Dormitory 'west Pimentel)
 
+; give the necessary commands to move your character to Kirin,
+; take the Potstickers
+(ask Me 'go 'west)
+(ask Me 'go 'north)
+(ask Me 'go 'north)
+(ask Me 'take Potstickers)
+
+; then move yourself to where Brian is, put down the
+; Potstickers, and have Brian take them
+(ask Me 'go 'south)
+(ask Me 'go 'up)
+(ask Me 'go 'west)
+(ask Brian 'take Potstickers)
+
+; then go back to the lab and get back to work
+(ask Me 'go 'east)
+(ask Me 'go 'down)
+(ask Me 'go 'south)
+(ask Me 'go 'south)
+; (load "adv-world.scm")
