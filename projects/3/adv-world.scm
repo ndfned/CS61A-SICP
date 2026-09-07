@@ -55,30 +55,34 @@
 (define nasty (instantiate thief 'nasty Sproul-Plaza))
 
 (define (sproul-hall-exit)
-   (error "You can check out any time you'd like, but you can never leave"))
+  (error "You can check out any time you'd like, but you can never leave"))
 
 (define (bh-office-exit)
   (print "What's your favorite programming language?")
-  (let ((answer (read)))
-    (if (eq? answer 'scheme)
-	(print "Good answer, but my favorite is Logo!")
-	(begin (newline) (bh-office-exit)))))
-    
+  (print "scheme")
+  (print "Good answer, but my favorite is Logo!")
+  ; comment lines below for now so they dont stop program run
+  ; (let ((answer (read)))
+  ;   (if (eq? answer 'scheme)
+  ; (print "Good answer, but my favorite is Logo!")
+  ; (begin (newline) (bh-office-exit))))
+  )
+
 
 (ask s-h 'add-entry-procedure
- (lambda () (print "Miles and miles of students are waiting in line...")))
+     (lambda () (print "Miles and miles of students are waiting in line...")))
 (ask s-h 'add-exit-procedure sproul-hall-exit)
 (ask BH-Office 'add-exit-procedure bh-office-exit)
 (ask Noahs 'add-entry-procedure
- (lambda () (print "Would you like lox with it?")))
+     (lambda () (print "Would you like lox with it?")))
 (ask Noahs 'add-exit-procedure
- (lambda () (print "How about a cinnamon raisin bagel for dessert?")))
+     (lambda () (print "How about a cinnamon raisin bagel for dessert?")))
 (ask Telegraph-Ave 'add-entry-procedure
- (lambda () (print "There are tie-dyed shirts as far as you can see...")))
+     (lambda () (print "There are tie-dyed shirts as far as you can see...")))
 (ask 61A-Lab 'add-entry-procedure
- (lambda () (print "The computers seem to be down")))
+     (lambda () (print "The computers seem to be down")))
 (ask 61A-Lab 'add-exit-procedure
- (lambda () (print "The workstations come back to life just in time.")))
+     (lambda () (print "The workstations come back to life just in time.")))
 
 ;; Some things.
 
