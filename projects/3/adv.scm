@@ -2,6 +2,12 @@
 ;; This file contains the definitions for the objects in the adventure
 ;; game and some utility procedures.
 
+(define (member? x items)
+  (cond ((null? items) #f)
+        ((equal? x (car items)) #t)
+        (else (member? x (cdr items)))
+        ))
+
 (define-class (place name)
               (instance-vars
                 (directions-and-neighbors '())
