@@ -54,14 +54,14 @@
 (define hacker (instantiate person 'hacker 61A-Lab))
 (define nasty (instantiate thief 'nasty Sproul-Plaza))
 
-(define s-h-exit-count 0)
-(define (sproul-hall-exit)
-  (begin
-    (set! s-h-exit-count (+ 1 s-h-exit-count))
-    (if (<= s-h-exit-count 3)
-      (error "You can check out any time you'd like, but you can never leave")
-    ))
-  )
+; (define s-h-exit-count 0)
+; (define (sproul-hall-exit)
+;   (begin
+;     (set! s-h-exit-count (+ 1 s-h-exit-count))
+;     (if (<= s-h-exit-count 3)
+;         (error "You can check out any time you'd like, but you can never leave")
+;         ))
+;   )
 
 (define (bh-office-exit)
   (print "What's your favorite programming language?")
@@ -77,7 +77,7 @@
 
 (ask s-h 'add-entry-procedure
      (lambda () (print "Miles and miles of students are waiting in line...")))
-(ask s-h 'add-exit-procedure sproul-hall-exit)
+; (ask s-h 'add-exit-procedure sproul-hall-exit) ; comment for now (annoying)
 (ask BH-Office 'add-exit-procedure bh-office-exit)
 (ask Noahs 'add-entry-procedure
      (lambda () (print "Would you like lox with it?")))
@@ -151,5 +151,14 @@
         (ask possessor 'name)
         'no-one)
     ))
+
+; A4a
+(define singer (instantiate person 'rick Sproul-Plaza))
+(ask singer 'set-talk "My funny valentine, sweet comic valentine")
+(define preacher (instantiate person 'preacher Sproul-Plaza))
+(ask preacher 'set-talk "Praise the Lord")
+(define street-person (instantiate person 'harry Telegraph-Ave))
+(ask street-person 'set-talk "Brother, can you spare a buck")
+
 
 ; (load "adv-world.scm")

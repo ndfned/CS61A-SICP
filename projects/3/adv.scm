@@ -33,6 +33,9 @@
                           (error "Person already in this place" (list name new-person)))
                       (set! people (cons new-person people))
                       (for-each (lambda (proc) (proc)) entry-procs)
+                      (for-each
+                        (lambda (person) (ask person 'notice new-person))
+                        (filter (lambda (person) (not (eq? person new-person))) people))
                       'appeared)
               (method (gone thing)
                       (if (not (memq thing things))
