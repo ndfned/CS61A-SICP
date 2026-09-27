@@ -54,8 +54,14 @@
 (define hacker (instantiate person 'hacker 61A-Lab))
 (define nasty (instantiate thief 'nasty Sproul-Plaza))
 
+(define s-h-exit-count 0)
 (define (sproul-hall-exit)
-  (error "You can check out any time you'd like, but you can never leave"))
+  (begin
+    (set! s-h-exit-count (+ 1 s-h-exit-count))
+    (if (<= s-h-exit-count 3)
+      (error "You can check out any time you'd like, but you can never leave")
+    ))
+  )
 
 (define (bh-office-exit)
   (print "What's your favorite programming language?")
