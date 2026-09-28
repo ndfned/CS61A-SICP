@@ -117,26 +117,29 @@
 (define Me (instantiate person 'Me Dormitory))
 (can-go Pimentel 'east Dormitory)
 (can-go Dormitory 'west Pimentel)
+(define Garage (instantiate garage 'Garage#1))
+(can-go Pimentel 'up Garage)
+(can-go Garage 'down Pimentel)
 
 ; give the necessary commands to move your character to Kirin,
 ; take the Potstickers
-(ask Me 'go 'west)
-(ask Me 'go 'north)
-(ask Me 'go 'north)
-(ask Me 'take Potstickers)
+; (ask Me 'go 'west)
+; (ask Me 'go 'north)
+; (ask Me 'go 'north)
+; (ask Me 'take Potstickers)
 
 ; then move yourself to where Brian is, put down the
 ; Potstickers, and have Brian take them
-(ask Me 'go 'south)
-(ask Me 'go 'up)
-(ask Me 'go 'west)
-(ask Brian 'take Potstickers)
+; (ask Me 'go 'south)
+; (ask Me 'go 'up)
+; (ask Me 'go 'west)
+; (ask Brian 'take Potstickers)
 
 ; then go back to the lab and get back to work
-(ask Me 'go 'east)
-(ask Me 'go 'down)
-(ask Me 'go 'south)
-(ask Me 'go 'south)
+; (ask Me 'go 'east)
+; (ask Me 'go 'down)
+; (ask Me 'go 'south)
+; (ask Me 'go 'south)
 
 (define (name obj) (ask obj 'name))
 (define (inventory obj)
