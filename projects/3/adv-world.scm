@@ -12,7 +12,7 @@
 
 (define Soda (instantiate place 'Soda))
 (define BH-Office (instantiate place 'BH-Office))
-(define MJC-Office (instantiate place 'MJC-Office))
+(define MJC-Office (instantiate locked-place 'MJC-Office))
 (define art-gallery (instantiate place 'art-gallery))
 (define Pimentel (instantiate place 'Pimentel))
 (define 61A-Lab (instantiate place '61A-Lab))

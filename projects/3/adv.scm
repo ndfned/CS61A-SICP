@@ -8,6 +8,13 @@
         (else (member? x (cdr items)))
         ))
 
+(define-class (locked-place name)
+              (parent (place name))
+              (instance-vars
+                (locked #t))
+              (method (unlock) (set! locked #f))
+              (method (lock) (set! locked #t))
+              (method (may-enter? person) (not locked)))
 (define-class (place name)
               (instance-vars
                 (directions-and-neighbors '())
@@ -16,6 +23,7 @@
                 (entry-procs '())
                 (exit-procs '()))
               (method (type) 'place)
+              (method (may-enter? person) #t)
               (method (neighbors) (map cdr directions-and-neighbors))
               (method (exits) (map car directions-and-neighbors))
               (method (look-in direction)
@@ -115,6 +123,8 @@
                       (let ((new-place (ask place 'look-in direction)))
                         (cond ((null? new-place)
                                (error "Can't go" direction))
+                              ((not (ask new-place 'may-enter? self))
+                               (error "The place is locked " direction))
                               (else
                                 (ask place 'exit self)
                                 (announce-move name place new-place)
