@@ -101,6 +101,21 @@
 
 ;; my code starts here
 
+(define (name obj) (ask obj 'name))
+(define (inventory obj)
+  (if (person? obj)
+      (map name (ask obj 'possessions))
+      (map name (ask obj 'things))))
+(define (inventory1 person) (car (ask person 'possessions)))
+(define (whereis person)
+  (ask (ask person 'place) 'name))
+(define (owner thing)
+  (let ((possessor (ask thing 'possessor)))
+    (if (person? possessor)
+        (ask possessor 'name)
+        'no-one)
+    ))
+
 ; Create a new person to represent yourself.  Put yourself in a new place
 ; called Dormitory (or wherever you live) and connect it to campus so that you
 ; can get there from here.  Create a place called Kirin, north of Soda.
@@ -117,6 +132,7 @@
 (define Me (instantiate person 'Me Dormitory))
 (can-go Pimentel 'east Dormitory)
 (can-go Dormitory 'west Pimentel)
+
 (define Garage (instantiate garage 'Garage#1))
 (can-go Pimentel 'up Garage)
 (can-go Garage 'down Pimentel)
@@ -141,27 +157,23 @@
 ; (ask Me 'go 'south)
 ; (ask Me 'go 'south)
 
-(define (name obj) (ask obj 'name))
-(define (inventory obj)
-  (if (person? obj)
-      (map name (ask obj 'possessions))
-      (map name (ask obj 'things))))
-(define (whereis person)
-  (ask (ask person 'place) 'name))
-(define (owner thing)
-  (let ((possessor (ask thing 'possessor)))
-    (if (person? possessor)
-        (ask possessor 'name)
-        'no-one)
-    ))
 
 ; A4a
-(define singer (instantiate person 'rick Sproul-Plaza))
-(ask singer 'set-talk "My funny valentine, sweet comic valentine")
-(define preacher (instantiate person 'preacher Sproul-Plaza))
-(ask preacher 'set-talk "Praise the Lord")
-(define street-person (instantiate person 'harry Telegraph-Ave))
-(ask street-person 'set-talk "Brother, can you spare a buck")
+; (define singer (instantiate person 'rick Sproul-Plaza))
+; (ask singer 'set-talk "My funny valentine, sweet comic valentine")
+; (define preacher (instantiate person 'preacher Sproul-Plaza))
+; (ask preacher 'set-talk "Praise the Lord")
+; (define street-person (instantiate person 'harry Telegraph-Ave))
+; (ask street-person 'set-talk "Brother, can you spare a buck")
 
+
+; A5 Garage implementation
+; (define car1 (instantiate thing 'car))
+; (ask Garage 'appear car1)
+; (ask Me 'go 'west)
+; (ask Me 'go 'up)
+; (ask Me 'take car1)
+; (ask Garage 'park car1)
+; (ask Garage 'unpark (inventory1 Me))
 
 ; (load "adv-world.scm")
