@@ -51,7 +51,9 @@
 ; -- Ryan Stejskal
 
 (define Brian (instantiate person 'Brian BH-Office))
+(ask Brian 'put 'strength 30)
 (define hacker (instantiate person 'hacker 61A-Lab))
+(ask hacker 'put 'strength 30)
 (define nasty (instantiate thief 'nasty Sproul-Plaza))
 
 ; (define s-h-exit-count 0)
@@ -130,6 +132,7 @@
 (ask Kirin 'appear Potstickers)
 
 (define Me (instantiate person 'Me Dormitory))
+(ask Me 'put 'strength 30)
 (can-go Pimentel 'east Dormitory)
 (can-go Dormitory 'west Pimentel)
 
@@ -177,9 +180,13 @@
 ; (ask Garage 'unpark (inventory1 Me))
 
 ; B3
-(define Guy1 (instantiate person 'Guy1 Noahs))
-(define another-bagel (instantiate thing 'another-bagel))
-(ask Noahs 'appear another-bagel)
-(ask Guy1 'take-all)
+; (define Guy1 (instantiate person 'Guy1 Noahs))
+; (define another-bagel (instantiate thing 'another-bagel))
+; (ask Noahs 'appear another-bagel)
+; (ask Guy1 'take-all)
+
+; B4a
+; (ask Brian 'put 'strength 100)
+; (ask Brian 'strength) ; 100
 
 ; (load "adv-world.scm")

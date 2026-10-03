@@ -58,6 +58,7 @@
               (method (lock) (set! locked #t))
               (method (may-enter? person) (not locked)))
 (define-class (place name)
+              (parent (basic-object))
               (instance-vars
                 (directions-and-neighbors '())
                 (things '())
@@ -119,7 +120,18 @@
                       (set! entry-procs '())
                       'cleared))
 
+(define-class (basic-object)
+              (instance-vars
+                (properties (make-table))
+                )
+              (method (put property value)
+                      (insert! property value properties)
+                      )
+              (default-method (lookup message properties))
+              )
+
 (define-class (person name place)
+              (parent (basic-object))
               (instance-vars
                 (possessions '())
                 (saying ""))
@@ -131,7 +143,7 @@
                            (filter (lambda (thing) (not (eq? thing self)))
                                    (append (ask place 'things) (ask place 'people)))))
               (method (take-all)
-                (for-each (lambda (thing) (ask self 'take thing)) (ask place 'things)))
+                      (for-each (lambda (thing) (ask self 'take thing)) (ask place 'things)))
               (method (take thing)
                       (cond ((not (thing? thing)) (error "Not a thing" thing))
                             ((not (memq thing (ask place 'things)))
@@ -184,6 +196,7 @@
               (parent (thing 'ticket))
               )
 (define-class (thing name)
+              (parent (basic-object))
               (instance-vars
                 (possessor 'no-one))
               (method (type) 'thing)
