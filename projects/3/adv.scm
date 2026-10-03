@@ -130,6 +130,8 @@
                       (map (lambda (obj) (ask obj 'name))
                            (filter (lambda (thing) (not (eq? thing self)))
                                    (append (ask place 'things) (ask place 'people)))))
+              (method (take-all)
+                (for-each (lambda (thing) (ask self 'take thing)) (ask place 'things)))
               (method (take thing)
                       (cond ((not (thing? thing)) (error "Not a thing" thing))
                             ((not (memq thing (ask place 'things)))

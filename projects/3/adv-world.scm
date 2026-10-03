@@ -176,4 +176,10 @@
 ; (ask Garage 'park car1)
 ; (ask Garage 'unpark (inventory1 Me))
 
+; B3
+(define Guy1 (instantiate person 'Guy1 Noahs))
+(define another-bagel (instantiate thing 'another-bagel))
+(ask Noahs 'appear another-bagel)
+(ask Guy1 'take-all)
+
 ; (load "adv-world.scm")
