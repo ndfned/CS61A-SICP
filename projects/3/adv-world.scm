@@ -189,4 +189,12 @@
 ; (ask Brian 'put 'strength 100)
 ; (ask Brian 'strength) ; 100
 
+; B5
+; (define Hotspot (instantiate hotspot 'asd))
+; (define laptop1 (instantiate laptop Hotspot))
+; (define Guy1 (instantiate person 'Guy1 Noahs))
+; (ask Hotspot 'appear laptop1)
+; (ask laptop1 'connect 'asd)
+; (ask laptop1 'surf "http://www.cs.berkeley.edu")
+
 ; (load "adv-world.scm")
