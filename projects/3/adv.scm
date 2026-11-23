@@ -279,10 +279,11 @@
               (instance-vars
                 (behavior 'steal))
               (method (type) 'thief)
-
               (method (notice person)
                       (if (eq? behavior 'run)
-                          (ask self 'go (pick-random (ask (usual 'place) 'exits)))
+                          (if (null? (ask (usual 'place) 'exits))
+                            (error "Place has no exits")
+                            (ask self 'go (pick-random (ask (usual 'place) 'exits))))
                           (let ((food-things
                                   (filter (lambda (thing)
                                             (and (edible? thing)
