@@ -74,6 +74,10 @@
                           )
                       )
               )
+
+(define-class (jail)
+              (parent (place 'jail))
+              )
 (define-class (locked-place name)
               (parent (place name))
               (instance-vars
@@ -216,7 +220,13 @@
                                     (ask new-place 'appear p))
                                   possessions)
                                 (set! place new-place)
-                                (ask new-place 'enter self))))))
+                                (ask new-place 'enter self)))))
+              (method (go-directly-to new-place)
+                      (begin
+                        (ask place 'exit self)
+                        (set! place new-place)
+                        (ask new-place 'enter self)
+                        )))
 
 (define-class (ticket number)
               (parent (thing 'ticket))

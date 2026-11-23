@@ -197,4 +197,9 @@
 ; (ask laptop1 'connect 'asd)
 ; (ask laptop1 'surf "http://www.cs.berkeley.edu")
 
+; A6a
+(define jail (instantiate jail))
+(define thief1 (instantiate thief 'thief1 Soda))
+(ask thief1 'go-directly-to jail)
+
 ; (load "adv-world.scm")
