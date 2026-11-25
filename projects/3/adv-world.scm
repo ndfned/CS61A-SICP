@@ -209,4 +209,14 @@
 ; (ask guy1 'pay-money 125) ; 25
 ; (ask guy1 'pay-money 75) ; #f
 
+; A7b
+(define-class (food name)
+              (parent (thing name))
+              )
+(define-class (bagel)
+              (parent (food 'bagel))
+              )
+(define Noahs (instantiate restaurant 'Noahs bagel 0.50))
+(ask (ask Noahs 'sell Me bagel) 'name) ; bagel
+
 ; (load "adv-world.scm")

@@ -75,6 +75,18 @@
                       )
               )
 
+(define-class (restaurant name food-type food-price)
+              (parent (place name))
+              (method (menu)
+                      (list (cons food-type food-price)))
+              (method (sell person food)
+                      (if (eq? food-type food)
+                          (if (ask person 'pay-money food-price)
+                              (instantiate food-type)
+                              #f)
+                          #f
+                          ))
+              )
 (define-class (jail)
               (parent (place 'jail))
               )
