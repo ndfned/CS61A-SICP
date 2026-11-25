@@ -202,4 +202,11 @@
 (define thief1 (instantiate thief 'thief1 Soda))
 (ask thief1 'go-directly-to jail)
 
+; A7a
+; (define guy1 (instantiate person 'Guy1 Noahs))
+; (ask guy1 'money) ; 100
+; (ask guy1 'get-money 50) ; 150
+; (ask guy1 'pay-money 125) ; 25
+; (ask guy1 'pay-money 75) ; #f
+
 ; (load "adv-world.scm")

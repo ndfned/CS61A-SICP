@@ -163,11 +163,20 @@
               (parent (basic-object))
               (instance-vars
                 (possessions '())
-                (saying ""))
+                (saying "")
+                (money 100))
               (initialize
                 (ask place 'enter self))
               (method (type) 'person)
               (method (person?) #t)
+              (method (get-money amount)
+                      (set! money (+ money amount)))
+              (method (pay-money amount)
+                      (if (<= amount money)
+                          (begin
+                            (set! money (- money amount))
+                            #t)
+                          #f))
               (method (look-around)
                       (map (lambda (obj) (ask obj 'name))
                            (filter (lambda (thing) (not (eq? thing self)))
@@ -282,8 +291,8 @@
               (method (notice person)
                       (if (eq? behavior 'run)
                           (if (null? (ask (usual 'place) 'exits))
-                            (error "Place has no exits")
-                            (ask self 'go (pick-random (ask (usual 'place) 'exits))))
+                              (error "Place has no exits")
+                              (ask self 'go (pick-random (ask (usual 'place) 'exits))))
                           (let ((food-things
                                   (filter (lambda (thing)
                                             (and (edible? thing)
